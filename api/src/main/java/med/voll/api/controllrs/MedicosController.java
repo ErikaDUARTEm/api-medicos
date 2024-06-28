@@ -1,6 +1,10 @@
 package med.voll.api.controllrs;
 
+import jakarta.validation.Valid;
 import med.voll.api.medico.DatosRegistroMedico;
+import med.voll.api.models.Medico;
+import med.voll.api.repository.MedicoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/medicos")
 public class MedicosController {
+    @Autowired
+    private MedicoRepository medicoRepository;
     @PostMapping
-    public void registrarMedico(@RequestBody DatosRegistroMedico datosRegistroMedico){
-        System.out.println(datosRegistroMedico);
+    public void registrarMedico(@RequestBody @Valid DatosRegistroMedico datosRegistroMedico){
+        medicoRepository.save(new Medico(datosRegistroMedico));
     }
 }
